@@ -57,7 +57,7 @@ export const useClearCache = (props?: OwnProps) => {
     await setAppVersion(version);
   }
 
-  const emptyCacheStorage = async (version?: string) => {
+  const emptyCacheStorage = async (reload=false,version?: string) => {
     if ('caches' in window) {
       // Service worker cache should be cleared with caches.delete()
       const cacheKeys = await window.caches.keys();
@@ -68,7 +68,9 @@ export const useClearCache = (props?: OwnProps) => {
 
     // clear browser cache and reload page
     await setVersion(version || latestVersion);
-    window.location.replace(window.location.href);
+    if(reload){
+      window.location.replace(window.location.href);
+    }
   };
 
   // Replace any last slash with an empty space
